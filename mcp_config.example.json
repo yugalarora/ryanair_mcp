@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ryanair-planner": {
+      "command": "/path/to/ryanair-mcp-server",
+      "args": [],
+      "env": {
+        "RYANAIR_CURRENCY": "EUR",
+        "RYANAIR_RADIUS_KM": "150",
+        "RYANAIR_DEFAULT_ORIGIN": ""
+      }
+    }
+  }
+}
