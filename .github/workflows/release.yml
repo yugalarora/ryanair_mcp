@@ -14,6 +14,9 @@ on:
 permissions:
   contents: write
 
+env:
+  GOPROXY: direct
+
 jobs:
   build:
     name: Build Binary (${{ matrix.target.goos }}/${{ matrix.target.goarch }})
