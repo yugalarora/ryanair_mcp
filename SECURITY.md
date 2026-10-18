@@ -13,7 +13,7 @@ Only the latest release and the current `main` branch receive active security up
 
 If you discover a security vulnerability within this project, please **do not** open a public issue.
 
-Instead, please report security issues privately by emailing the maintainers or opening a [GitHub Private Security Advisory](https://github.com/YOUR_USERNAME/ryanair-mcp-server/security/advisories/new).
+Instead, please report security issues privately by emailing the maintainers or opening a [GitHub Private Security Advisory](https://github.com/yugalarora/ryanair_mcp/security/advisories/new).
 
 Please include:
 - A description of the vulnerability and its potential impact.

@@ -1,8 +1,11 @@
-# Smithery configuration for Ryanair MCP Server
+# Smithery configuration for Ryanair Flight Planner MCP Server
+# https://smithery.ai/docs/config
+build:
+  dockerfile: Dockerfile
 startCommand:
   type: stdio
   config:
-    command: ./ryanair-mcp-server
+    command: /app/ryanair-mcp-server
     args: []
     env:
       RYANAIR_CURRENCY: "EUR"

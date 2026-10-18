@@ -1,6 +1,6 @@
 module ryanair-mcp
 
-go 1.25.7
+go 1.25.5
 
 require github.com/mark3labs/mcp-go v1.2.1
 

@@ -1,9 +1,9 @@
 # Ryanair Flight Planner MCP Server
 
-[![CI](https://github.com/YOUR_USERNAME/ryanair-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/ryanair-mcp-server/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/YOUR_USERNAME/ryanair-mcp-server?display_name=tag)](https://github.com/YOUR_USERNAME/ryanair-mcp-server/releases)
+[![CI](https://github.com/yugalarora/ryanair_mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/yugalarora/ryanair_mcp/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/yugalarora/ryanair_mcp?display_name=tag)](https://github.com/yugalarora/ryanair_mcp/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Go Report Card](https://goreportcard.com/badge/github.com/YOUR_USERNAME/ryanair-mcp-server)](https://goreportcard.com/report/github.com/YOUR_USERNAME/ryanair-mcp-server)
+[![Go Report Card](https://goreportcard.com/badge/github.com/yugalarora/ryanair_mcp)](https://goreportcard.com/report/github.com/yugalarora/ryanair_mcp)
 
 An ultra-fast, lightweight **Model Context Protocol (MCP)** server written in **Go** that equips autonomous AI assistants (Antigravity, Claude Desktop, Cursor, etc.) with real-time flight search, multi-airport regional discovery, and intelligent travel planning capabilities.
 
@@ -64,7 +64,7 @@ All parameters can be customized without touching code via environment variables
 ## 📦 Installation & Setup
 
 ### Option 1: Download Pre-built Binary
-Download the pre-compiled binary for your operating system and CPU architecture from the [GitHub Releases](https://github.com/YOUR_USERNAME/ryanair-mcp-server/releases) page:
+Download the pre-compiled binary for your operating system and CPU architecture from the [GitHub Releases](https://github.com/yugalarora/ryanair_mcp/releases) page:
 * **macOS**: `ryanair-mcp-v1.0.0-darwin-arm64.tar.gz` (Apple Silicon M1/M2/M3/M4) or `darwin-amd64` (Intel)
 * **Linux**: `ryanair-mcp-v1.0.0-linux-amd64.tar.gz` or `linux-arm64.tar.gz`
 * **Windows**: `ryanair-mcp-v1.0.0-windows-amd64.zip`
@@ -75,11 +75,20 @@ Extract the binary and place it in your preferred path (e.g. `/usr/local/bin` or
 Requires **Go 1.22+**:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ryanair-mcp-server.git
-cd ryanair-mcp-server
+git clone https://github.com/yugalarora/ryanair_mcp.git
+cd ryanair_mcp
 
 # Build executable
 GOPROXY=direct go build -o ryanair-mcp-server .
+```
+
+### Option 3: Run with Docker
+```bash
+# Build Docker image
+docker build -t ryanair-mcp-server .
+
+# Run in stdio mode
+docker run -i --rm ryanair-mcp-server
 ```
 
 ---
@@ -141,7 +150,7 @@ If you are publishing or distributing this MCP server, the ecosystem supports se
    - This repository already includes `smithery.yaml`.
    - Once published to GitHub, users can install it via:
      ```bash
-     npx -y @smithery/cli install ryanair-mcp-server --client claude
+     npx -y @smithery/cli install @yugalarora/ryanair_mcp --client claude
      ```
 2. **[Glama.ai](https://glama.ai/mcp/servers)**:
    - Community registry for discovering MCP servers. Submit your GitHub repository URL on the Glama directory to index tools and documentation automatically.

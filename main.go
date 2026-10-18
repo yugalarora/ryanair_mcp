@@ -65,6 +65,15 @@ func main() {
 	startServer(s, cfg)
 }
 
+func getStringArg(args map[string]interface{}, keys ...string) string {
+	for _, k := range keys {
+		if val, ok := args[k].(string); ok && val != "" {
+			return val
+		}
+	}
+	return ""
+}
+
 func registerPlanTrip(s *server.MCPServer, plnr *planner.Planner, cfg config.Config) {
 	tool := mcp.NewTool("plan_trip",
 		mcp.WithDescription("Intelligent multi-airport trip planner for Ryanair flights. Given origin and destination cities/regions (e.g. 'Brussels' to 'Faro/Algarve'), it automatically identifies nearby departure and arrival airports within a radius, queries flight schedules across all viable airport pairs concurrently, and ranks complete journey options by price and convenience. Supports both one-way and return trips."),
@@ -114,7 +123,7 @@ func registerPlanTrip(s *server.MCPServer, plnr *planner.Planner, cfg config.Con
 			return mcp.NewToolResultError("invalid arguments"), nil
 		}
 
-		origin, _ := args["origin"].(string)
+		origin := getStringArg(args, "origin", "from", "departure", "orig")
 		if origin == "" {
 			origin = cfg.DefaultOrigin
 		}
@@ -122,23 +131,23 @@ func registerPlanTrip(s *server.MCPServer, plnr *planner.Planner, cfg config.Con
 			return mcp.NewToolResultError("origin parameter is required"), nil
 		}
 
-		dest, _ := args["destination"].(string)
+		dest := getStringArg(args, "destination", "to", "arrival", "dest")
 		if dest == "" {
 			return mcp.NewToolResultError("destination parameter is required"), nil
 		}
 
-		outboundDateFrom, _ := args["outbound_date_from"].(string)
+		outboundDateFrom := getStringArg(args, "outbound_date_from", "outbound_date", "date_from", "date", "departure_date")
 		if outboundDateFrom == "" {
 			return mcp.NewToolResultError("outbound_date_from is required"), nil
 		}
 
-		outboundDateTo, _ := args["outbound_date_to"].(string)
+		outboundDateTo := getStringArg(args, "outbound_date_to", "date_to")
 		if outboundDateTo == "" {
 			outboundDateTo = outboundDateFrom
 		}
 
-		returnDateFrom, _ := args["return_date_from"].(string)
-		returnDateTo, _ := args["return_date_to"].(string)
+		returnDateFrom := getStringArg(args, "return_date_from", "return_date", "inbound_date_from", "inbound_date")
+		returnDateTo := getStringArg(args, "return_date_to", "inbound_date_to")
 		if returnDateFrom != "" && returnDateTo == "" {
 			returnDateTo = returnDateFrom
 		}
@@ -231,16 +240,16 @@ func registerSearchFlights(s *server.MCPServer, client *ryanair.Client, cfg conf
 			return mcp.NewToolResultError("invalid arguments"), nil
 		}
 
-		origin, _ := args["origin"].(string)
+		origin := getStringArg(args, "origin", "from", "departure", "orig")
 		if origin == "" {
 			return mcp.NewToolResultError("origin parameter is required"), nil
 		}
-		dest, _ := args["destination"].(string)
-		dateFrom, _ := args["date_from"].(string)
+		dest := getStringArg(args, "destination", "to", "arrival", "dest")
+		dateFrom := getStringArg(args, "date_from", "date", "departure_date", "outbound_date_from", "outbound_date")
 		if dateFrom == "" {
 			return mcp.NewToolResultError("date_from parameter is required"), nil
 		}
-		dateTo, _ := args["date_to"].(string)
+		dateTo := getStringArg(args, "date_to", "outbound_date_to")
 		if dateTo == "" {
 			dateTo = dateFrom
 		}
@@ -311,15 +320,27 @@ func registerSearchReturnFlights(s *server.MCPServer, client *ryanair.Client, cf
 			return mcp.NewToolResultError("invalid arguments"), nil
 		}
 
-		origin, _ := args["origin"].(string)
+		origin := getStringArg(args, "origin", "from", "departure", "orig")
 		if origin == "" {
 			return mcp.NewToolResultError("origin parameter is required"), nil
 		}
-		dest, _ := args["destination"].(string)
-		outboundFrom, _ := args["outbound_date_from"].(string)
-		outboundTo, _ := args["outbound_date_to"].(string)
-		returnFrom, _ := args["return_date_from"].(string)
-		returnTo, _ := args["return_date_to"].(string)
+		dest := getStringArg(args, "destination", "to", "arrival", "dest")
+		outboundFrom := getStringArg(args, "outbound_date_from", "outbound_date", "date_from", "date")
+		if outboundFrom == "" {
+			return mcp.NewToolResultError("outbound_date_from parameter is required"), nil
+		}
+		outboundTo := getStringArg(args, "outbound_date_to", "date_to")
+		if outboundTo == "" {
+			outboundTo = outboundFrom
+		}
+		returnFrom := getStringArg(args, "return_date_from", "return_date", "inbound_date_from", "inbound_date")
+		if returnFrom == "" {
+			return mcp.NewToolResultError("return_date_from parameter is required"), nil
+		}
+		returnTo := getStringArg(args, "return_date_to", "inbound_date_to")
+		if returnTo == "" {
+			returnTo = returnFrom
+		}
 		currency, _ := args["currency"].(string)
 		if currency == "" {
 			currency = cfg.DefaultCurrency
@@ -371,10 +392,10 @@ func registerGetDailyFlights(s *server.MCPServer, client *ryanair.Client, cfg co
 			return mcp.NewToolResultError("invalid arguments"), nil
 		}
 
-		origin, _ := args["origin"].(string)
-		dest, _ := args["destination"].(string)
-		date, _ := args["date"].(string)
-		currency, _ := args["currency"].(string)
+		origin := getStringArg(args, "origin", "from", "departure", "orig")
+		dest := getStringArg(args, "destination", "to", "arrival", "dest")
+		date := getStringArg(args, "date", "date_from", "departure_date", "outbound_date_from", "outbound_date")
+		currency := getStringArg(args, "currency")
 		if currency == "" {
 			currency = cfg.DefaultCurrency
 		}
@@ -422,7 +443,7 @@ func registerFindNearbyAirports(s *server.MCPServer, cfg config.Config) {
 			return mcp.NewToolResultError("invalid arguments"), nil
 		}
 
-		query, _ := args["query"].(string)
+		query := getStringArg(args, "query", "city", "airport", "origin", "destination", "location")
 		if query == "" {
 			return mcp.NewToolResultError("query parameter is required"), nil
 		}

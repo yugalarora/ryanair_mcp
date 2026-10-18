@@ -31,12 +31,41 @@ func TestFindNearbyAirports(t *testing.T) {
 			minCount:     1,
 		},
 		{
-			name:         "London area airports",
-			query:        "London",
-			radiusKm:     120,
-			limit:        10,
-			expectCity:   "London",
-			minCount:     3,
+			name:       "London area airports",
+			query:      "London",
+			radiusKm:   120,
+			limit:      10,
+			expectCity: "London",
+			minCount:   3,
+		},
+		{
+			name:     "Regional alias Andalusia",
+			query:    "Andalusia",
+			radiusKm: 250,
+			limit:    5,
+			minCount: 2, // Finds SVQ, AGP, XRY
+		},
+		{
+			name:     "Destination alias Tarifa",
+			query:    "Tarifa",
+			radiusKm: 150,
+			limit:    5,
+			minCount: 1, // Finds XRY / AGP
+		},
+		{
+			name:     "Regional alias Puglia",
+			query:    "Puglia",
+			radiusKm: 150,
+			limit:    5,
+			minCount: 2, // Finds BRI and BDS
+		},
+		{
+			name:         "New airport NRN Weeze",
+			query:        "NRN",
+			radiusKm:     150,
+			limit:        5,
+			expectAnchor: "NRN",
+			minCount:     1,
 		},
 	}
 

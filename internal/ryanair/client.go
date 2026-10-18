@@ -285,9 +285,10 @@ func (c *Client) GetRoundTripFares(
 // to retrieve all distinct scheduled flights on that route (since FareFinder only returns 1 per time window).
 func (c *Client) GetDailyFlights(ctx context.Context, origin, dest, date, currency string) ([]Flight, error) {
 	timeWindows := [][2]string{
-		{"00:00", "13:00"},
-		{"13:01", "18:00"},
-		{"18:01", "23:59"},
+		{"00:00", "11:00"},
+		{"11:01", "15:30"},
+		{"15:31", "19:30"},
+		{"19:31", "23:59"},
 	}
 
 	type result struct {

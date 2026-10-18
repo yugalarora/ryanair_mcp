@@ -19,8 +19,8 @@ By participating in this project, you agree to abide by our [Code of Conduct](CO
 
 ### Clone and Build
 ```bash
-git clone https://github.com/YOUR_USERNAME/ryanair-mcp-server.git
-cd ryanair-mcp-server
+git clone https://github.com/yugalarora/ryanair_mcp.git
+cd ryanair_mcp
 
 # Build locally
 GOPROXY=direct go build -o ryanair-mcp-server .
