@@ -1,7 +1,7 @@
 {
   "name": "eurohop-flight-planner",
   "displayName": "EuroHop Flight Planner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Search budget flights across Europe's secondary airports. Expands a city or region into every airport in range, then compares routes and full daily timetables using public Ryanair FareFinder data.",
   "author": {
     "name": "Yugal Arora",
@@ -19,9 +19,9 @@
       "command": "node",
       "args": ["${CLAUDE_PLUGIN_ROOT}/server/index.js"],
       "env": {
-        "RYANAIR_CURRENCY": "${user_config.default_currency}",
-        "RYANAIR_DEFAULT_ORIGIN": "${user_config.default_origin}",
-        "RYANAIR_RADIUS_KM": "${user_config.default_radius_km}"
+        "CLAUDE_PLUGIN_OPTION_DEFAULT_CURRENCY": "${user_config.default_currency}",
+        "CLAUDE_PLUGIN_OPTION_DEFAULT_ORIGIN": "${user_config.default_origin}",
+        "CLAUDE_PLUGIN_OPTION_DEFAULT_RADIUS_KM": "${user_config.default_radius_km}"
       }
     }
   },

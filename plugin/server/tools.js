@@ -8,18 +8,29 @@ const { findNearbyAirports } = require('./airports');
 const { getOneWayFares, getRoundTripFares, getDailyFlights } = require('./ryanair');
 const { planTrip } = require('./planner');
 
-/** Runtime defaults, overridable by environment variables. */
-function loadConfig(env) {
-  const number = (raw, fallback) => {
-    const parsed = Number(raw);
-    return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
-  };
+const DEFAULT_CURRENCY = 'EUR';
+const DEFAULT_RADIUS_KM = 150;
+const DEFAULT_MAX_OPTIONS = 15;
+
+/**
+ * Normalise the three user-settable options into runtime defaults.
+ * Takes plain values, not an environment object: the caller reads the few
+ * named variables it needs and passes them in.
+ */
+function loadConfig(options) {
+  const settings = options || {};
+
+  const radiusKm = Number(settings.radiusKm);
+  const currency =
+    typeof settings.currency === 'string' && /^[A-Za-z]{3}$/.test(settings.currency.trim())
+      ? settings.currency.trim().toUpperCase()
+      : DEFAULT_CURRENCY;
 
   return {
-    defaultCurrency: env.RYANAIR_CURRENCY || env.DEFAULT_CURRENCY || 'EUR',
-    defaultOrigin: env.RYANAIR_DEFAULT_ORIGIN || env.DEFAULT_ORIGIN || '',
-    defaultRadiusKm: number(env.RYANAIR_RADIUS_KM || env.DEFAULT_RADIUS_KM, 150),
-    defaultMaxOptions: Math.floor(number(env.RYANAIR_MAX_OPTIONS || env.DEFAULT_MAX_OPTIONS, 15)),
+    defaultCurrency: currency,
+    defaultOrigin: typeof settings.origin === 'string' ? settings.origin.trim() : '',
+    defaultRadiusKm: Number.isFinite(radiusKm) && radiusKm > 0 ? radiusKm : DEFAULT_RADIUS_KM,
+    defaultMaxOptions: DEFAULT_MAX_OPTIONS,
   };
 }
 
@@ -175,7 +186,7 @@ function buildTools(config) {
         requirePresent(
           origin,
           'origin',
-          'Give a city, region, or IATA code, or set RYANAIR_DEFAULT_ORIGIN.'
+          'Give a city, region, or IATA code, or set a home airport in the plugin settings.'
         );
 
         const destination = requirePresent(pickString(args, ALIASES.destination), 'destination');

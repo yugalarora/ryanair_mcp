@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 'use strict';
 
 // Minimal Model Context Protocol server over stdio, with no dependencies.
@@ -9,7 +8,7 @@ const { buildTools, loadConfig, ToolInputError } = require('./tools');
 const { buildPrompts } = require('./prompts');
 
 const SERVER_NAME = 'eurohop-flight-planner';
-const SERVER_VERSION = '1.0.0';
+const SERVER_VERSION = '1.0.1';
 
 // Protocol revisions this server knows how to speak. We echo the client's
 // version when we support it, and otherwise offer our newest.
@@ -46,7 +45,14 @@ function sendError(id, code, message) {
   send({ jsonrpc: '2.0', id, error: { code, message } });
 }
 
-const config = loadConfig(process.env);
+// Read only the three named variables this server uses, each one the value of
+// a userConfig option declared in plugin.json. The environment is never read
+// as a whole, so nothing else on the machine can reach the network through us.
+const config = loadConfig({
+  currency: process.env.CLAUDE_PLUGIN_OPTION_DEFAULT_CURRENCY,
+  origin: process.env.CLAUDE_PLUGIN_OPTION_DEFAULT_ORIGIN,
+  radiusKm: process.env.CLAUDE_PLUGIN_OPTION_DEFAULT_RADIUS_KM,
+});
 const tools = buildTools(config);
 const prompts = buildPrompts(config);
 
