@@ -1,0 +1,15 @@
+{
+  "name": "yugalarora",
+  "description": "Travel and flight-search plugins for Claude, built around Europe's low-cost point-to-point airport network.",
+  "owner": {
+    "name": "Yugal Arora",
+    "url": "https://github.com/yugalarora"
+  },
+  "plugins": [
+    {
+      "name": "eurohop-flight-planner",
+      "source": "./plugin",
+      "description": "Search budget flights across Europe's secondary airports. Expands a city or region into every airport in range, then compares routes and full daily timetables using public Ryanair FareFinder data."
+    }
+  ]
+}

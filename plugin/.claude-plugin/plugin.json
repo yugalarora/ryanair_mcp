@@ -1,0 +1,50 @@
+{
+  "name": "eurohop-flight-planner",
+  "displayName": "EuroHop Flight Planner",
+  "version": "1.0.0",
+  "description": "Search budget flights across Europe's secondary airports. Expands a city or region into every airport in range, then compares routes and full daily timetables using public Ryanair FareFinder data.",
+  "author": {
+    "name": "Yugal Arora",
+    "url": "https://github.com/yugalarora"
+  },
+  "homepage": "https://github.com/yugalarora/ryanair_mcp",
+  "repository": "https://github.com/yugalarora/ryanair_mcp",
+  "documentationUrl": "https://github.com/yugalarora/ryanair_mcp#readme",
+  "supportUrl": "https://github.com/yugalarora/ryanair_mcp/issues",
+  "license": "MIT",
+  "icon": "./.claude-plugin/icon.png",
+  "keywords": ["flights", "travel", "europe", "airports", "trip-planning"],
+  "mcpServers": {
+    "eurohop-flights": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/index.js"],
+      "env": {
+        "RYANAIR_CURRENCY": "${user_config.default_currency}",
+        "RYANAIR_DEFAULT_ORIGIN": "${user_config.default_origin}",
+        "RYANAIR_RADIUS_KM": "${user_config.default_radius_km}"
+      }
+    }
+  },
+  "userConfig": {
+    "default_currency": {
+      "type": "string",
+      "title": "Default currency",
+      "description": "ISO currency code used to price fares when a search does not name one.",
+      "default": "EUR"
+    },
+    "default_origin": {
+      "type": "string",
+      "title": "Home airport or city",
+      "description": "Optional. Used as the departure point when a search does not name one, e.g. CRL, STN, Dublin.",
+      "default": ""
+    },
+    "default_radius_km": {
+      "type": "number",
+      "title": "Default search radius (km)",
+      "description": "How far from a named city or region to look for alternative airports.",
+      "default": 150,
+      "min": 10,
+      "max": 500
+    }
+  }
+}
