@@ -1,7 +1,7 @@
 {
   "name": "eurohop-flight-planner",
   "displayName": "EuroHop Flight Planner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Search budget flights across Europe's secondary airports. Expands a city or region into every airport in range, then compares routes and full daily timetables using public Ryanair FareFinder data.",
   "author": {
     "name": "Yugal Arora",
@@ -12,7 +12,6 @@
   "documentationUrl": "https://github.com/yugalarora/ryanair_mcp#readme",
   "supportUrl": "https://github.com/yugalarora/ryanair_mcp/issues",
   "license": "MIT",
-  "icon": "./.claude-plugin/icon.png",
   "keywords": ["flights", "travel", "europe", "airports", "trip-planning"],
   "mcpServers": {
     "eurohop-flights": {

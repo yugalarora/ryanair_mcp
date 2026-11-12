@@ -8,7 +8,7 @@ const { buildTools, loadConfig, ToolInputError } = require('./tools');
 const { buildPrompts } = require('./prompts');
 
 const SERVER_NAME = 'eurohop-flight-planner';
-const SERVER_VERSION = '1.0.1';
+const SERVER_VERSION = '1.0.2';
 
 // Protocol revisions this server knows how to speak. We echo the client's
 // version when we support it, and otherwise offer our newest.
